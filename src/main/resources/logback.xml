@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>   <!-- Reference Manual http://logback.qos.ch/manual/index.html -->
+<configuration scan="true" scanPeriod="10 seconds" debug="debug">
+	<property name="LOG_HOME" value="d:/log4j_logs" />
+	<property name="OUT_FORMAT"
+		value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{60} - %msg%n" />
+	<appender name="infoRollingFile"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>INFO</level>
+			<onMatch>ACCEPT</onMatch>
+			<onMismatch>DENY</onMismatch>
+		</filter>
+		<file>${LOG_HOME}/log_info.txt</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_HOME}/log_info%d{yyyy-MM-dd}.%i.txt
+			</fileNamePattern>
+			<maxHistory>360</maxHistory>
+			<timeBasedFileNamingAndTriggeringPolicy
+				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>10MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+		<encoder>
+			<pattern>${OUT_FORMAT}	</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="debugRollingFile"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>DEBUG</level>
+			<onMatch>ACCEPT</onMatch>
+			<onMismatch>DENY</onMismatch>
+		</filter>
+		<file>${LOG_HOME}/log_debug.txt</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_HOME}/log_debug%d{yyyy-MM-dd}.%i.txt
+			</fileNamePattern>
+			<maxHistory>360</maxHistory>
+			<timeBasedFileNamingAndTriggeringPolicy
+				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>10MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+		<encoder>
+			<pattern>${OUT_FORMAT}	</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="errorRollingFile"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>ERROR</level>
+			<onMatch>ACCEPT</onMatch>
+			<onMismatch>DENY</onMismatch>
+		</filter>
+		<file>${LOG_HOME}/log_err.txt</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_HOME}/log_err%d{yyyy-MM-dd}.%i.txt
+			</fileNamePattern>
+			<maxHistory>360</maxHistory>
+			<timeBasedFileNamingAndTriggeringPolicy
+				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>10MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+		<encoder>
+			<pattern>${OUT_FORMAT}	</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender"> 
+		<encoder>
+			<pattern>${OUT_FORMAT}	</pattern>
+		</encoder>
+	</appender>
+	
+	<root level="debug">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="infoRollingFile" />
+		<appender-ref ref="debugRollingFile" />
+		<appender-ref ref="errorRollingFile" />
+	</root>
+</configuration> 
