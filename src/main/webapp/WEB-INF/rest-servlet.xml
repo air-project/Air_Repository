@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	<context:component-scan base-package="com.yh.rest.controller" />
+	<!-- To enable @RequestMapping process on type level and method level -->
+	<bean id="defaultAnnotationHandlerMapping"  class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" />
+	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+		<property name="messageConverters">
+			<list>
+				<bean class="org.springframework.http.converter.StringHttpMessageConverter">
+					<property name="supportedMediaTypes">
+						<list>
+							<value>text/plain;charset=UTF-8</value>
+						</list>
+					</property>
+				</bean>
+				<bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="jaxbMarshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
+		<property name="classesToBeBound">
+			<list>
+				<value>com.yh.rest.bean.Employee</value>
+				<value>com.yh.rest.bean.EmployeeList</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="employees" class="org.springframework.web.servlet.view.xml.MarshallingView">
+		<constructor-arg ref="jaxbMarshaller" />
+	</bean>
+
+	<!-- 根据客户端的不同的请求决定不同的view进行响应, 如 /blog/1.json /blog/1.xml -->
+	<bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+		<!-- 设置为true以忽略对Accept Header的支持 -->
+		<property name="ignoreAcceptHeader" value="true" />
+		
+		<!-- 在没有扩展名时即: "/blog/1" 时的默认展现形式 -->
+		<property name="defaultContentType" value="text/html" />
+
+		<!-- 扩展名至mimeType的映射,即 /blog.json => application/json -->
+		<property name="mediaTypes">
+			<map>
+				<entry key="html" value="text/html" />
+				<entry key="pdf" value="application/pdf" />
+				<entry key="xsl" value="application/vnd.ms-excel" />
+				<entry key="xml" value="application/xml" />
+				<entry key="json" value="application/json" />
+			</map>
+		</property>
+	
+		<!-- 用于开启 /blog/123?format=json 的支持 -->
+		<property name="favorParameter" value="false" />
+		<property name="viewResolvers">
+			<list>
+				<bean class="org.springframework.web.servlet.view.BeanNameViewResolver" />
+				<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+					<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
+					<property name="prefix" value="/WEB-INF/jsp/"/>
+					<property name="suffix" value=".jsp"></property>
+				</bean>
+			</list>
+		</property>
+		<property name="defaultViews">
+			<list>
+				<!-- for application/json -->
+				<bean class="org.springframework.web.servlet.view.json.MappingJacksonJsonView" />
+				<!-- for application/xml -->
+				<!-- 
+				<bean class="org.springframework.web.servlet.view.xml.MarshallingView"> 
+					<property name="marshaller"> 
+						<bean class="org.springframework.oxm.xstream.XStreamMarshaller"/> 
+					</property> 
+				</bean> 
+				-->
+			</list>
+		</property>
+	</bean>
+	
+	<!--bean id="viewResolver" class="org.springframework.web.servlet.view.BeanNameViewResolver" /-->
+
+	<bean id="employeeController" class="com.yh.rest.controller.EmployeeController">
+		<property name="employeeDS" ref="employeeDS" />
+		<property name="jaxb2Mashaller" ref="jaxbMarshaller" />
+	</bean>
+</beans>
