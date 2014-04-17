@@ -1,4 +1,5 @@
-package yh.id.prefix;
+package com.yh.id.prefix;
+
 
 /**
  * InitSequenceGeneratorException
@@ -12,6 +13,6 @@ package yh.id.prefix;
  * @since 2010-03-17
  */
 public interface PrefixGenerator {
-  public String create() throws CreatePrefixException;
+//  public String create() throws CreatePrefixException;
 }
  

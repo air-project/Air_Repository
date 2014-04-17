@@ -1,7 +1,6 @@
-package yh.id.prefix;
+package com.yh.id.prefix;
 
-import org.g4studio.core.id.CreatePrefixException;
-import org.g4studio.core.id.PrefixGenerator;
+
 
 /**
  * DefaultPrefixGenerator
@@ -27,14 +26,14 @@ public class DefaultPrefixGenerator implements PrefixGenerator {
 	 */
 	private String pattern = "yyyyMMdd";
 
-	public String create() throws CreatePrefixException {
-		StringBuffer sb = new StringBuffer();
-		sb.append(prefix);
-		if (this.withDate) {
-			sb.append(getFormatedDate());
-		}
-		return sb.toString();
-	}
+//	public String create() throws CreatePrefixException {
+//		StringBuffer sb = new StringBuffer();
+//		sb.append(prefix);
+//		if (this.withDate) {
+//			sb.append(getFormatedDate());
+//		}
+//		return sb.toString();
+//	}
 
 	private String getFormatedDate() {
 		java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat(

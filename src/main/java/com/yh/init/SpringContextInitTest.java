@@ -4,10 +4,8 @@ import java.util.Locale;
 
 import org.junit.After;
 import org.junit.AfterClass;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +13,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.test.annotation.Repeat;
 
 import com.yh.test.BaseSpringTestCase;
+
 
 
 

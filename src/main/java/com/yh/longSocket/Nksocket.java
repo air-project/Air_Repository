@@ -1,4 +1,5 @@
-package longSocket;
+package com.yh.longSocket;
+
 
 import java.io.BufferedReader;
 import java.io.IOException;

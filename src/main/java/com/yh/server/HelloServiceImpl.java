@@ -1,4 +1,4 @@
-package server;
+package com.yh.server;
 
 import javax.jws.WebService;
 

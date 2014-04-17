@@ -28,12 +28,12 @@ class MyFutureTask extends FutureTask<String> {
 	}
 
 	protected void done() {
-			try {
-				System.out.println(get() + " 线程执行完毕！~");
-			} catch (InterruptedException|ExecutionException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} 
+//			try {
+//				System.out.println(get() + " 线程执行完毕！~");
+//			} catch (InterruptedException|ExecutionException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			} 
 	}
 	
 	
