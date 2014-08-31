@@ -20,6 +20,6 @@ public class Log {
 		return value;
 	}
 	public static void main(String[] args) {
-		Log.guess(1110);
+		Log.guess(10);
 	}
 }
